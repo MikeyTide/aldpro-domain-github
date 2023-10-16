@@ -3,7 +3,6 @@ app_info="Программа подключения клиента к домен
 internet_error="У вас проблемы с доступом к сайту dl.astralinux.ru. Проверьте настройку интернет соединения и правильность dns."
 license="Продолжая установку ALDPro с помощью данной программы, Вы подтверждаете что приобрели лицензию и согласны с ее условиями. Автор программы не предоставляет лицензию на продукт."
 reboot="Для корректной работы необходимо перезагрузить компьютер."
-error_lvl="Вы пытаетесь установить ALDPro на версию Astra Linux отличную от версии Смоленск."
 
 if ping -c 1 dl.astralinux.ru &> /dev/null; then
     zenity --info --text="$app_info" --height=200 --width=200
@@ -25,10 +24,6 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
             exit 1
             # Добавьте здесь код, который должен выполниться, если пароль от sudo введен неправильно.
         fi
-    lvl=$(echo "$passwd" | sudo -S astra-modeswitch get)
-        if [ $lvl != 2 ] ; then 
-            zenity --info --text="$error_lvl" --height=200 --width=200
-        else
         form_data=$(zenity --forms --title="Введите данные" --text="Введите данные:" \
             --add-entry="Введите имя клиента домена типа: client1" \
             --add-entry="Введите имя домена типа: domain.test" \
@@ -56,10 +51,6 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
             #репы
             echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/aldpro/stable/repository-extended/ generic main' >> /etc/apt/sources.list.d/aldpro.list"
             echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/aldpro/stable/repository-main/ 2.1.0 main' >> /etc/apt/sources.list.d/aldpro.list"
-            echo $passwd | sudo -S bash -c "echo -e 'deb http://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-main/ 1.7_x86-64 main contrib non-free'  > /etc/apt/sources.list"   
-            echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-update/ 1.7_x86-64 main contrib non-free' >> /etc/apt/sources.list"
-            echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-base/ 1.7_x86-64 main contrib non-free' >> /etc/apt/sources.list" 
-            echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-extended/ 1.7_x86-64 main contrib non-free' >> /etc/apt/sources.list" 
             echo $passwd | sudo -S bash -c "echo -e 'deb http://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/repository-extended 1.7_x86-64 main contrib non-free' >> /etc/apt/sources.list" 
             echo $passwd | sudo -S bash -c "echo -e 'deb http://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/repository-base 1.7_x86-64 main non-free contrib' >> /etc/apt/sources.list"
             # установка сертификатов
@@ -107,7 +98,6 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
                 fi
             ) | zenity --progress --pulsate
             zenity --info --text="$reboot" --height=200 --width=200
-        fi
 else
     zenity --info --text="$internet_error" --height=300 --width=400
 fi

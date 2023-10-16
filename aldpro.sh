@@ -90,20 +90,20 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
                     if [ $lvl != 2 ] ; then 
                         zenity --info --text="$error_lvl" --height=300 --width=400
                         else
-                                form_data=$(zenity --forms --title="Введите данные" --text="Введите данные:" \
-                                    --add-entry="Введите имя клиента домена типа: client1" \
-                                    --add-entry="Введите имя домена типа: domain.test" \
-                                    --add-entry="Введите имя полное доменное имя клиента типа: client1.domain.test" \
-                                    --add-entry="Введите статический ip-address вашего будущего домена типа: 10.10.10.10" \
-                                    --add-entry="Введите маску подсети вашего будущего домена типа: 255.255.255.0" \
-                                    --add-password="Введите gateway сети вашего будущего домена типа: 10.10.10.1" )
-                                    # Разбиение строки с данными на отдельные переменные
-                                    small_fqdn=$(echo "$form_data" | awk -F '|' '{print $1}')
-                                    big_fqdn=$(echo "$form_data" | awk -F '|' '{print $2}')
-                                    fqdn=$(echo "$form_data" | awk -F '|' '{print $3}')
-                                    ipaddres=$(echo "$form_data" | awk -F '|' '{print $4}')
-                                    mask=$(echo "$form_data" | awk -F '|' '{print $5}')
-                                    gateway=$(echo "$form_data" | awk -F '|' '{print $6}')
+                        form_data=$(zenity --forms --title="Введите данные" --text="Введите данные:" \
+                                --add-entry="Введите имя контроллера домена имя типа: dc" \
+                                --add-entry="Введите имя домена типа: domain.test" \
+                                --add-entry="Введите имя полное доменное имя типа: dc.domain.test" \
+                                --add-entry="Введите статический ip-address вашего будущего домена типа: 10.10.10.10" \
+                                --add-entry="Введите маску подсети вашего будущего домена типа: 255.255.255.0" \
+                                --add-password="Введите gateway сети вашего будущего домена типа: 10.10.10.1" )
+                                # Разбиение строки с данными на отдельные переменные
+                                small_fqdn=$(echo "$form_data" | awk -F '|' '{print $1}')
+                                big_fqdn=$(echo "$form_data" | awk -F '|' '{print $2}')
+                                fqdn=$(echo "$form_data" | awk -F '|' '{print $3}')
+                                ipaddres=$(echo "$form_data" | awk -F '|' '{print $4}')
+                                mask=$(echo "$form_data" | awk -F '|' '{print $5}')
+                                gateway=$(echo "$form_data" | awk -F '|' '{print $6}')
                                 #запись в файлы
                                 echo $passwd | sudo -S bash -c "echo '$ipaddres' >> /opt/aldpro/ipaddres"
                                 echo $passwd | sudo -S bash -c "echo '$small_fqdn' >> /opt/aldpro/small_fqdn"
@@ -121,11 +121,7 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
                                 (
                                 #репы
                                 echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/aldpro/stable/repository-extended/ generic main' >> /etc/apt/sources.list.d/aldpro.list"
-                                echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/aldpro/stable/repository-main/ 2.1.0 main' >> /etc/apt/sources.list.d/aldpro.list"
-                                echo $passwd | sudo -S bash -c "echo -e 'deb http://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-main/ 1.7_x86-64 main contrib non-free'  > /etc/apt/sources.list"   
-                                echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-update/ 1.7_x86-64 main contrib non-free' >> /etc/apt/sources.list"
-                                echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-base/ 1.7_x86-64 main contrib non-free' >> /etc/apt/sources.list" 
-                                echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-extended/ 1.7_x86-64 main contrib non-free' >> /etc/apt/sources.list" 
+                                echo $passwd | sudo -S bash -c "echo -e 'deb https://dl.astralinux.ru/aldpro/stable/repository-main/ 2.1.0 main' >> /etc/apt/sources.list.d/aldpro.list" 
                                 echo $passwd | sudo -S bash -c "echo -e 'deb http://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/repository-extended 1.7_x86-64 main contrib non-free' >> /etc/apt/sources.list" 
                                 echo $passwd | sudo -S bash -c "echo -e 'deb http://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/repository-base 1.7_x86-64 main non-free contrib' >> /etc/apt/sources.list"
                                 # установка сертификатов
