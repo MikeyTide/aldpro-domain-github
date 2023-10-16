@@ -132,9 +132,9 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
             exit_code=$?
             # Проверка кода завершения и отображение соответствующего сообщения
                 if [ $exit_code -eq 0 ]; then
-                    zenity --info --title="Успех" --text="Система успешно обновлена"
+                    echo "Система успешно обновлена"
                 else
-                    zenity --error --title="Ошибка" --text="Ошибка при обновление системы."
+                    echo "Ошибка при обновление системы."
                     exit 1
                 fi
             #меняем resolf.conf
@@ -145,9 +145,9 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
             exit_code=$?
             # Проверка кода завершения и отображение соответствующего сообщения
                 if [ $exit_code -eq 0 ]; then
-                    zenity --info --title="Успех" --text="Клиент успешно подключен"
+                    echo "Клиент успешно подключен"
                 else
-                    zenity --error --title="Ошибка" --text="Ошибка при подключению к домену"
+                    echo "Ошибка при подключению к домену"
                     exit 1
                 fi
             echo "$reboot" 

@@ -137,7 +137,7 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
                                 echo $passwd | sudo -S bash -c "echo '127.0.1.1 $small_fqdn' >> /etc/hosts"
                                 # добавление в автозапуск
                                 echo $passwd | sudo -S cp "$0" /opt/aldpro.sh 
-                                echo $passwd | sudo -S chmod 777 /opt/aldpro.sh
+                                echo $passwd | sudo -S chmod +x /opt/aldpro.sh
                                 echo $passwd | sudo -S bash -c "echo -e '[Desktop Entry]
                     Type=Application
                     Categories=System;Utility;
