@@ -10,7 +10,6 @@ internet_error="У вас проблемы с доступом к сайту dl.
 license="Продолжая установку ALDPro с помощью данной программы, Вы подтверждаете что приобрели лицензию и согласны с ее условиями. Автор программы не предоставляет лицензию на продукт."
 if ping -c 1 dl.astralinux.ru &> /dev/null; then
     if [ -f "$file_path/small_fqdn" ]; then
-        zenity --info --text="$app_info1" --height=300 --width=400
         passwd=$(cat $file_path/passwd)
         #проверка правильности введеного пароля sudo 
         echo "$passwd" | sudo -Sv >/dev/null 2>&1

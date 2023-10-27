@@ -10,7 +10,6 @@ internet_error="У вас проблемы с доступом к сайту dl.
 license="Продолжая установку ALDPro с помощью данной программы, Вы подтверждаете что приобрели лицензию и согласны с ее условиями. Автор программы не предоставляет лицензию на продукт."
 if ping -c 1 dl.astralinux.ru &> /dev/null; then
     if [ -f "$file_path/name_dc" ]; then
-        echo $app_info1
         passwd=$(cat $file_path/passwd)
         #проверка правильности введеного пароля sudo 
         echo "$passwd" | sudo -Sv >/dev/null 2>&1
@@ -55,7 +54,7 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
                 echo "Ошибка" 
                 exit 1
             fi
-        installed="ALDPro был успешно установлен на ваш сервер. Для просмотра веб-панели перейдите в браузер по ссылке https://"$fqdn"\nДанные для входа логин: admin, пароль: Который вы указывали"
+        echo "ALDPro был успешно установлен на ваш сервер. Для просмотра веб-панели перейдите в браузер по ссылке https://"$fqdn"\nДанные для входа логин: admin, пароль: Который вы указывали"
         firefox -new-tab https://"$fqdn"&
         echo $passwd | sudo -S rm -r /opt/aldpro
         echo $passwd | sudo -S rm /etc/xdg/autostart/aldpro.desktop
