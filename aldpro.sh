@@ -105,6 +105,7 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
                                 mask=$(echo "$form_data" | awk -F '|' '{print $5}')
                                 gateway=$(echo "$form_data" | awk -F '|' '{print $6}')
                                 #запись в файлы
+                                echo $passwd | sudo -S mkdir /opt/aldpro
                                 echo $passwd | sudo -S bash -c "echo '$ipaddres' >> /opt/aldpro/ipaddres"
                                 echo $passwd | sudo -S bash -c "echo '$small_fqdn' >> /opt/aldpro/small_fqdn"
                                 echo $passwd | sudo -S bash -c "echo '$fqdn' >> /opt/aldpro/fqdn"
