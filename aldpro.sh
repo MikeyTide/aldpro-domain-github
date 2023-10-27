@@ -11,9 +11,7 @@ license="Продолжая установку ALDPro с помощью данн
 if ping -c 1 dl.astralinux.ru &> /dev/null; then
     if [ -f "$file_path/small_fqdn" ]; then
         zenity --info --text="$app_info1" --height=300 --width=400
-        passwd=$(zenity --forms --title="Пароль для администратора" \
-            --text="Введите пароль администратора" \
-            --add-password="Пароль")
+        passwd=$(cat $file_path/passwd)
         #проверка правильности введеного пароля sudo 
         echo "$passwd" | sudo -Sv >/dev/null 2>&1
         if [ $? -eq 0 ]; then
@@ -24,9 +22,7 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
             exit 1
             # Добавьте здесь код, который должен выполниться, если пароль от sudo введен неправильно.
         fi
-        passwd_dom=$(zenity --forms --title="Пароль для администратора домена" \
-            --text="Придумайте пароль для администратора домена" \
-            --add-password="Пароль") 
+        passwd_dom=$(cat $file_path/passwd_dom)
         small_fqdn=$(cat $file_path/small_fqdn)
         big_fqdn=$(cat $file_path/big_fqdn)
         fqdn=$(cat $file_path/fqdn)
@@ -96,7 +92,8 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
                                 --add-entry="Введите имя полное доменное имя типа: dc.domain.test" \
                                 --add-entry="Введите статический ip-address вашего будущего домена типа: 10.10.10.10" \
                                 --add-entry="Введите маску подсети вашего будущего домена типа: 255.255.255.0" \
-                                --add-entry="Введите gateway сети вашего будущего домена типа: 10.10.10.1" )
+                                --add-entry="Введите gateway сети вашего будущего домена типа: 10.10.10.1" \
+                                --add-password="Придумайте пароль для администратора домена: " )
                                 # Разбиение строки с данными на отдельные переменные
                                 small_fqdn=$(echo "$form_data" | awk -F '|' '{print $1}')
                                 big_fqdn=$(echo "$form_data" | awk -F '|' '{print $2}')
@@ -104,12 +101,15 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
                                 ipaddres=$(echo "$form_data" | awk -F '|' '{print $4}')
                                 mask=$(echo "$form_data" | awk -F '|' '{print $5}')
                                 gateway=$(echo "$form_data" | awk -F '|' '{print $6}')
+                                passwd_dom=$(echo "$form_data" | awk -F '|' '{print $7}')
                                 #запись в файлы
                                 echo $passwd | sudo -S mkdir /opt/aldpro
                                 echo $passwd | sudo -S bash -c "echo '$ipaddres' >> /opt/aldpro/ipaddres"
                                 echo $passwd | sudo -S bash -c "echo '$small_fqdn' >> /opt/aldpro/small_fqdn"
                                 echo $passwd | sudo -S bash -c "echo '$fqdn' >> /opt/aldpro/fqdn"
                                 echo $passwd | sudo -S bash -c "echo '$big_fqdn' >> /opt/aldpro/big_fqdn"
+                                echo $passwd | sudo -S bash -c "echo '$passwd_dom' >> /opt/aldpro/passwd_dom"
+                                echo $passwd | sudo -S bash -c "echo '$passwd' >> /opt/aldpro/passwd"
                                 version_astra=$(cat /etc/astra_version)
                                 version="1.7.4"
                                 version_old="У вас установлена версия астры "$version_astra" и она будет обновлена до 1.7.4"
