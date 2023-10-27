@@ -96,7 +96,7 @@ if ping -c 1 dl.astralinux.ru &> /dev/null; then
                                 --add-entry="Введите имя полное доменное имя типа: dc.domain.test" \
                                 --add-entry="Введите статический ip-address вашего будущего домена типа: 10.10.10.10" \
                                 --add-entry="Введите маску подсети вашего будущего домена типа: 255.255.255.0" \
-                                --add-password="Введите gateway сети вашего будущего домена типа: 10.10.10.1" )
+                                --add-entry="Введите gateway сети вашего будущего домена типа: 10.10.10.1" )
                                 # Разбиение строки с данными на отдельные переменные
                                 small_fqdn=$(echo "$form_data" | awk -F '|' '{print $1}')
                                 big_fqdn=$(echo "$form_data" | awk -F '|' '{print $2}')
